@@ -1,12 +1,14 @@
 <img src="https://bun.com/logo.png" height="36" />
 
-# Bun Security Scanner Template
+# Healthy Ingredients
 
-A template for creating a security scanner for Bun's package installation
-process. Security scanners scan packages against your threat intelligence feeds
-and control whether installations proceed based on detected threats.
+This is a [Security Scanner](https://bun.com/docs/install/security-scanner-api) for Bun, aiming to perform scans across multiple public and private databases of CVEs.
 
-📚 [**Full documentation**](https://bun.com/docs/install/security-scanner-api)
+This scanner is using the following APIs (more to come in the future):
+
+- [Github's Global Security Advsiories (GHSA)](https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28#list-global-security-advisories)
+
+Bun's package manager can scan packages for security vulnerabilities before installation, helping protect your applications from supply chain attacks and known vulnerabilities.
 
 ## How It Works
 
@@ -17,6 +19,27 @@ When packages are installed via Bun, your security scanner:
 3. **Validates** the response data
 4. **Categorizes** threats by severity
 5. **Returns** advisories to control installation (empty array if safe)
+
+📚 [**Full documentation**](https://bun.com/docs/install/security-scanner-api)
+
+## Installation
+
+```bash
+bun add -d @designverse-ai/bun-healthy-ingredients
+```
+
+Then configure it in your `bunfig.toml`:
+
+```toml
+[install.security]
+scanner = "@designverse-ai/bun-healthy-ingredients"
+```
+
+### Github GHSA
+
+For Github GHSA, you can use the package without a `GITHUB_TOKEN`. To scan against private packages that are hosted on Github, you will need to set one.
+
+[Check the GHSA API](https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28#list-global-security-advisories)
 
 ### Advisory Levels
 
@@ -29,13 +52,15 @@ When packages are installed via Bun, your security scanner:
 
 All advisories are always displayed to the user regardless of level.
 
+## Development
+
 ### Error Handling
 
 If your `scan` function throws an error, it will be gracefully handled by Bun, but the installation process **will be cancelled** as a defensive precaution.
 
 ### Validation
 
-When fetching threat feeds over the network, use schema validation  
+When fetching threat feeds over the network, use schema validation
 (e.g., Zod) to ensure data integrity. Invalid responses should fail immediately
 rather than silently returning empty advisories.
 
