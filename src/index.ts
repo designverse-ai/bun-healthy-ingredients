@@ -11,9 +11,13 @@ const octokit = new PaginatedOctokit({
 })
 
 const fetchThreatFeed = async (packages: Bun.Security.Package[]) => {
+  const GHSA_CHUNK_SIZE = parseInt(Bun.env.BUNHI_GHSA_CHUNK_SIZE ?? "100")
+
   const feed: GHSA[] = []
 
-  // GHSA has a limit of 1000 packages per request, so we need to split the packages into multiple requests
+  /**
+   * GHSA has a limit of {@link GHSA_CHUNK_SIZE} packages per request, so we need to split the packages into multiple requests
+   */
   const chunks = packages.reduce<Bun.Security.Package[][]>((chunks, pkg) => {
     // If the first chunk is empty, add the package to it
     if (chunks.length === 0) {
@@ -24,7 +28,7 @@ const fetchThreatFeed = async (packages: Bun.Security.Package[]) => {
     const lastChunk = chunks.at(-1)
 
     // If the last chunk is not full, add the package to it
-    if (lastChunk && lastChunk.length < 1000) {
+    if (lastChunk && lastChunk.length < GHSA_CHUNK_SIZE) {
       lastChunk.push(pkg)
     } else {
       // If the last chunk is full, create a new chunk

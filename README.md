@@ -41,6 +41,18 @@ For Github GHSA, you can use the package without a `GITHUB_TOKEN`. To scan again
 
 [Check the GHSA API](https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28#list-global-security-advisories)
 
+By default, the packges are being passed to GHSA in chunks of `100`, meaning you get around `80` characters per package name (including its version) in order to match the limit of `8192` characters imposed by the `GET` queries. If you encounter rate limits or it is too slow, consider setting the chunk size via `BUNHI_GHSA_CHUNK_SIZE`:
+
+```env
+BUNHI_GHSA_CHUNK_SIZE=200
+```
+
+When scanning, you can also use `--verbose` to see what's going on:
+
+```bash
+bun pm scan --verbose
+```
+
 ### Advisory Levels
 
 - **Fatal** (`level: 'fatal'`): Installation stops immediately
