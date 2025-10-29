@@ -1,7 +1,7 @@
 {
   "name": "@designverse-ai/bun-healthy-ingredients",
   "description": " Vulnerability Scanner for Bun, so that you can cook with healthy ingredients!",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Designverse",
   "license": "MIT",
   "exports": {
@@ -60,8 +60,7 @@
   },
   "scripts": {
     "format:check": "prettier --cache -c './**/*.{js,jsx,mjs,cjs,ts,tsx,vue}' --ignore-path .gitignore",
-    "format": "prettier --cache -l -w './**/*.{js,jsx,mjs,cjs,ts,tsx,vue}' --ignore-path .gitignore",
-    "prepare": "husky"
+    "format": "prettier --cache -l -w './**/*.{js,jsx,mjs,cjs,ts,tsx,vue}' --ignore-path .gitignore"
   },
   "commitlint": {
     "extends": [
