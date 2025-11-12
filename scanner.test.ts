@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test"
-import { scanner } from "./src/index.ts"
 import { z } from "zod"
+
+import { scanner } from "./src/index.ts"
 
 /////////////////////////////////////////////////////////////////////////////////////
 //  This test file is mostly just here to get you up and running quickly. It's

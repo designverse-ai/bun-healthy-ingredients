@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/core"
-import type { Endpoints } from "@octokit/types"
 import { paginateRest } from "@octokit/plugin-paginate-rest"
+import type { Endpoints } from "@octokit/types"
 
 const PaginatedOctokit = Octokit.plugin(paginateRest)
 
